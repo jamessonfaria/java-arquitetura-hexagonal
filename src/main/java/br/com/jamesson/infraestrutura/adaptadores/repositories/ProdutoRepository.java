@@ -38,7 +38,7 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
     public void salvar(Produto produto) {
         ProdutoEntity produtoEntity;
         if (Objects.isNull(produto.getCodigo()))
-            produtoEntity = new ProdutoEntity();
+            produtoEntity = new ProdutoEntity(produto);
         else {
             produtoEntity = this.springProdutoRepository.findById(produto.getCodigo()).get();
             produtoEntity.atualizar(produto);
