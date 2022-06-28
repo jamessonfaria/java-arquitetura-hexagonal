@@ -6,6 +6,7 @@ import br.com.jamesson.infraestrutura.adaptadores.entidades.ProdutoEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,14 @@ public class ProdutoRepository implements ProdutoRepositoryPort {
 
     @Override
     public void salvar(Produto produto) {
+        ProdutoEntity produtoEntity;
+        if (Objects.isNull(produto.getCodigo()))
+            produtoEntity = new ProdutoEntity();
+        else {
+            produtoEntity = this.springProdutoRepository.findById(produto.getCodigo()).get();
+            produtoEntity.atualizar(produto);
+        }
 
+        this.springProdutoRepository.save(produtoEntity);
     }
 }
