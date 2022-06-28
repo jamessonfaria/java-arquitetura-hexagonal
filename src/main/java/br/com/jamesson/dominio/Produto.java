@@ -55,4 +55,13 @@ public class Produto {
         return new ProdutoDTO(this.sku, this.nome, this.preco, this.quantidade);
     }
 
+    @Override
+    public String toString() {
+        return "Produto{" +
+                ", sku='" + sku + '\'' +
+                ", nome='" + nome + '\'' +
+                ", preco=" + preco +
+                ", quantidade=" + quantidade +
+                '}';
+    }
 }

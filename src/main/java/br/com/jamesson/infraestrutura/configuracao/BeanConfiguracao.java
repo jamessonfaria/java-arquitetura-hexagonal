@@ -1,6 +1,7 @@
 package br.com.jamesson.infraestrutura.configuracao;
 
 import br.com.jamesson.dominio.adaptadores.services.PedidoServiceImpl;
+import br.com.jamesson.dominio.portas.interfaces.EmailServicePort;
 import br.com.jamesson.dominio.portas.interfaces.ProdutoServicePort;
 import br.com.jamesson.dominio.portas.repositories.ProdutoRepositoryPort;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +11,9 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguracao {
 
     @Bean
-    ProdutoServicePort produtoService(ProdutoRepositoryPort produtoRepositoryPort) {
-        return new PedidoServiceImpl(produtoRepositoryPort);
+    ProdutoServicePort produtoService(ProdutoRepositoryPort produtoRepositoryPort,
+                                      EmailServicePort emailServicePort) {
+        return new PedidoServiceImpl(produtoRepositoryPort, emailServicePort);
     }
 
 }

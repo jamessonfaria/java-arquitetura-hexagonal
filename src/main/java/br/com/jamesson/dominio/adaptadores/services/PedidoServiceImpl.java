@@ -1,8 +1,10 @@
 package br.com.jamesson.dominio.adaptadores.services;
 
+import br.com.jamesson.dominio.Email;
 import br.com.jamesson.dominio.Produto;
 import br.com.jamesson.dominio.dtos.EstoqueDTO;
 import br.com.jamesson.dominio.dtos.ProdutoDTO;
+import br.com.jamesson.dominio.portas.interfaces.EmailServicePort;
 import br.com.jamesson.dominio.portas.interfaces.ProdutoServicePort;
 import br.com.jamesson.dominio.portas.repositories.ProdutoRepositoryPort;
 
@@ -13,9 +15,11 @@ import java.util.stream.Collectors;
 public class PedidoServiceImpl implements ProdutoServicePort {
 
     private final ProdutoRepositoryPort produtoRepositoryPort;
+    private final EmailServicePort emailServicePort;
 
-    public PedidoServiceImpl(ProdutoRepositoryPort produtoRepositoryPort) {
+    public PedidoServiceImpl(ProdutoRepositoryPort produtoRepositoryPort, EmailServicePort emailServicePort) {
         this.produtoRepositoryPort = produtoRepositoryPort;
+        this.emailServicePort = emailServicePort;
     }
 
     @Override
@@ -29,6 +33,8 @@ public class PedidoServiceImpl implements ProdutoServicePort {
     public void criarProduto(ProdutoDTO produtoDTO) {
         Produto produto = new Produto(produtoDTO);
         this.produtoRepositoryPort.salvar(produto);
+        this.emailServicePort.enviar(new Email("Teste...", "james@dev.com",
+                "Ola, boa tarde...", "amanda@aol.com", produto));
     }
 
     @Override
